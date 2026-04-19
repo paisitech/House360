@@ -21,7 +21,7 @@ async function getLandlordId() {
   return { supabase, landlordId: landlord.id, userId: user.id };
 }
 
-export async function generateRentCycles(): Promise<ActionResult> {
+export async function generateRentCycles(): Promise<ActionResult<string>> {
   try {
     const { supabase, landlordId } = await getLandlordId();
 
@@ -71,7 +71,7 @@ export async function generateRentCycles(): Promise<ActionResult> {
     }
 
     revalidatePath("/landlord/payments");
-    return { success: true, error: `${created} rent cycle(s) generated` };
+    return { success: true, data: `${created} rent cycle(s) generated` };
   } catch {
     return { success: false, error: "Something went wrong" };
   }
@@ -178,3 +178,5 @@ export async function verifyManualPayment(
     return { success: false, error: "Something went wrong" };
   }
 }
+
+
